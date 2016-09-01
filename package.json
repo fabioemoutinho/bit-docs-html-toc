@@ -1,0 +1,33 @@
+{
+  "name": "bit-docs-html-toc",
+  "version": "0.1.0",
+  "description": "table of contents bit-docs plugin",
+  "main": "toc.js",
+  "scripts": {
+    "test": "echo 'testing'",
+    "postversion": "git push --tags && git push",
+    "release:pre": "npm version prerelease && npm publish",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bit-docs/bit-docs-prettify.git"
+  },
+  "keywords": [
+    "bit-docs"
+  ],
+  "author": "Bitovi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bit-docs/bit-docs-prettify/issues"
+  },
+  "homepage": "https://github.com/bit-docs/bit-docs-prettify#readme",
+  "system": {},
+  "dependencies": {
+    "can-control": "^3.0.0-pre.5",
+    "can-stache": "^3.0.0-pre.11",
+    "can-stache-bindings": "^3.0.0-pre.8"
+  }
+}
