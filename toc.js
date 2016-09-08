@@ -33,7 +33,8 @@ var TableOfContents = Control.extend({
 		this.scroller = document.body;
 		this.container = this.element.parentNode;
 
-		this.depth = window.docObject.outline && window.docObject.outline.depth || 1;
+		var depth = window.docObject.outline && window.docObject.outline.depth;
+		this.depth = typeof depth === "number" ? depth : 1;
 
 		this.navHeight = this.getNavHeight();
 		this.titles = this.collectTitles();
@@ -94,7 +95,7 @@ var TableOfContents = Control.extend({
 			return "article " + h;
 		}).join(",");
 
-		var titles = document.querySelectorAll(selector);
+		var titles = selector ? document.querySelectorAll(selector) : [];
 		var curScroll = this.scroller.scrollTop;
 		var navHeight = this.navHeight;
 		return [].map.call(titles, function(title, idx){
