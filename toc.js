@@ -6,8 +6,6 @@ var template = stache("{{#each titles}}" +
 	"<li><a ($click)='scrollTo(., %event)' href='#{{id}}'>{{text}}</a></li>" +
 	"{{/each}}");
 
-var toc = document.getElementsByClassName("on-this-page")[0];
-
 function throttle(fn, ms){
 	var wait = false;
 	return function(){
@@ -22,19 +20,30 @@ function throttle(fn, ms){
 	};
 }
 
+function outerHeight(el) {
+  var height = el.offsetHeight;
+  var style = getComputedStyle(el);
+
+  height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+  return height;
+}
+
 var TableOfContents = Control.extend({
 	init: function(el, options){
 		this.scroller = document.body;
-		this.titleSelector = options.titleSelector || ".signature-title";
+		this.container = this.element.parentNode;
+
+		this.depth = window.docObject.outline && window.docObject.outline.depth || 1;
 
 		this.navHeight = this.getNavHeight();
-
 		this.titles = this.collectTitles();
 
 		// If there are no titles, bail
 		if(!this.titles.length) {
 			el.parentNode.removeChild(el);
 			return;
+		} else {
+			el.parentNode.style.display = 'block';
 		}
 		this.titleIndex = 0;
 		this.calculateActive();
@@ -46,7 +55,8 @@ var TableOfContents = Control.extend({
 			scrollTo: function(item, ev){
 				ev.preventDefault();
 				toc.disabled(true);
-				window.scrollTo(0, item.pos + 1);
+				var pos = item.pos + toc.TOCHeight;
+				window.scrollTo(0, pos + 1);
 				toc.calculateActive();
 
 				requestAnimationFrame(function(){
@@ -55,6 +65,8 @@ var TableOfContents = Control.extend({
 			}
 		}));
 		this.setActive(this.titleIndex);
+		this.TOCHeight = this.getTOCHeight();
+		this.container.style.height = this.TOCHeight + 'px';
 
 		// Wait until we've appended the TOC so it can be part of the calculation
 		this.fixed(!this.isFirstTitleVisible());
@@ -67,6 +79,10 @@ var TableOfContents = Control.extend({
 		return nav.clientHeight;
 	},
 
+	getTOCHeight: function(){
+		return outerHeight(this.element);
+	},
+
 	isFirstTitleVisible: function(){
 		var firstPosition = this.titles[0].pos + this.element.clientHeight +
 			this.navHeight;
@@ -74,7 +90,11 @@ var TableOfContents = Control.extend({
 	},
 
 	collectTitles: function(){
-		var titles = document.querySelectorAll("article " + this.titleSelector);
+		var selector = this.getHeadings().map(function(h){
+			return "article " + h;
+		}).join(",");
+
+		var titles = document.querySelectorAll(selector);
 		var curScroll = this.scroller.scrollTop;
 		var navHeight = this.navHeight;
 		return [].map.call(titles, function(title, idx){
@@ -87,6 +107,14 @@ var TableOfContents = Control.extend({
 				pos: title.getBoundingClientRect().top + curScroll - navHeight
 			};
 		});
+	},
+
+	getHeadings: function(){
+		var headings = [];
+		for(var i = 0; i < this.depth; i++) {
+			headings.push("h" + (i + 2));
+		}
+		return headings;
 	},
 
 	fixed: function(fixed){
@@ -131,35 +159,48 @@ var TableOfContents = Control.extend({
 
 	calculateActive: function(){
 		var scrollTop = this.scroller.scrollTop;
+		var TOCHeight = this.TOCHeight;
 
 		// Determine which h2 should be showing
 		var prev = this.getTitle(this.titleIndex);
 		var next = this.getTitle(this.titleIndex + 1);
 
 		// See if we need to jump to the next when scrolling down
-		var cur;
-		while(scrollTop > next.pos) {
+		var cur, nextPos = next.pos + TOCHeight;
+		while(scrollTop > nextPos) {
 			cur = next;
 			next = this.getTitle(cur.index + 1);
+			nextPos = next.pos + TOCHeight;
 		}
 
 		// See if we need to move to the previous when scrolling up
 		if(!cur) {
+			var curPos;
 			do {
 				cur = prev;
+				curPos = cur.pos + TOCHeight;
 				prev = this.getTitle(prev.index - 1);
-			} while(scrollTop < cur.pos);
+			} while(scrollTop < curPos);
 		}
 
 		if(typeof cur.pos !== "undefined") {
 			this.setActive(cur.index);
 		}
-	},
-
-
-
+	}
 });
 
-if(toc) {
-	new TableOfContents(toc);
-}
+var TOCContainer = Control.extend({
+	init: function(el){
+		el.style.display = 'none';
+
+		var toc = document.createElement("ul");
+		toc.className = "on-this-page";
+		el.appendChild(toc);
+
+		new TableOfContents(toc);
+	}
+});
+
+new TOCContainer(
+	document.getElementsByClassName("on-this-page-container")[0]
+);
