@@ -100,7 +100,7 @@ var TableOfContents = Control.extend({
 		var navHeight = this.navHeight;
 		return [].map.call(titles, function(title, idx){
 			var txt = title.textContent;
-			title.id = 'sig_' + txt.replace(/\s/g,"").replace(/[^\w]/g,"_");
+			title.id = 'section_' + txt.replace(/\s/g,"").replace(/[^\w]/g,"_");
 			return {
 				id: title.id,
 				index: idx,
