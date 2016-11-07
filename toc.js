@@ -20,6 +20,13 @@ function throttle(fn, ms){
 	};
 }
 
+function makeAnchorHeadingId(anchorText) {
+	return (anchorText || "")
+		.replace(/\s/g, "-")       // replace spaces with dashes
+		.replace(/[^\w\-]/g, "")   // remove punctuation
+		.toLowerCase();
+}
+
 function outerHeight(el) {
   var height = el.offsetHeight;
   var style = getComputedStyle(el);
@@ -98,9 +105,17 @@ var TableOfContents = Control.extend({
 		var titles = selector ? document.querySelectorAll(selector) : [];
 		var curScroll = this.scroller.scrollTop;
 		var navHeight = this.navHeight;
-		return [].map.call(titles, function(title, idx){
+		var headings = {};
+
+		return [].map.call(titles, function(title, idx) {
 			var txt = title.textContent;
-			title.id = 'section_' + txt.replace(/\s/g,"").replace(/[^\w]/g,"_");
+			var id = makeAnchorHeadingId(txt);
+			var count = headings[id] || 0;
+
+			// add unique id if we get headings with the same text
+			title.id = makeAnchorHeadingId(txt) + (count > 0 ? "-" + count : "");
+			headings[id] = count + 1;
+
 			return {
 				id: title.id,
 				index: idx,
