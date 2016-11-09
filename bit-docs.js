@@ -1,8 +1,8 @@
-var path = require("path");
 var tags = require("./tags");
 
-module.exports = function(bitDocs){
+module.exports = function(bitDocs) {
 	var pkg = require("./package.json");
+
 	var dependencies = {};
 	dependencies[pkg.name] = pkg.version;
 
@@ -11,4 +11,4 @@ module.exports = function(bitDocs){
 	});
 
 	bitDocs.register("tags", tags);
-}
+};

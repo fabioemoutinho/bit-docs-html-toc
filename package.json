@@ -4,7 +4,8 @@
   "description": "table of contents bit-docs plugin",
   "main": "toc.js",
   "scripts": {
-    "test": "echo 'testing'",
+    "jshint": "jshint *.js --config .jshintrc",
+    "test": "npm run jshint && mocha --reporter spec",
     "postversion": "git push --tags && git push",
     "release:pre": "npm version prerelease && npm publish",
     "release:patch": "npm version patch && npm publish",
@@ -13,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bit-docs/bit-docs-prettify.git"
+    "url": "git+https://github.com/bit-docs/bit-docs-html-toc.git"
   },
   "keywords": [
     "bit-docs"
@@ -21,13 +22,15 @@
   "author": "Bitovi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bit-docs/bit-docs-prettify/issues"
+    "url": "https://github.com/bit-docs/bit-docs-html-toc/issues"
   },
-  "homepage": "https://github.com/bit-docs/bit-docs-prettify#readme",
+  "homepage": "https://github.com/bit-docs/bit-docs-html-toc#readme",
   "system": {},
   "dependencies": {
     "can-control": "^3.0.0-pre.5",
-    "can-stache": "^3.0.0-pre.11",
-    "can-stache-bindings": "^3.0.0-pre.8"
+    "can-stache": "^3.0.0-pre.11"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2"
   }
 }
