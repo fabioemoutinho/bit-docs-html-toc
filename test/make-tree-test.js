@@ -1,5 +1,7 @@
-var assert = require("assert");
 var makeTree = require("../make-tree");
+var assert = require("chai/chai").assert;
+
+require("steal-mocha");
 
 describe("makeTree", function() {
 	it("makes flat trees based on heading tag names", function() {
