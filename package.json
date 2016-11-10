@@ -5,7 +5,7 @@
   "main": "toc.js",
   "scripts": {
     "jshint": "jshint *.js --config .jshintrc",
-    "test": "npm run jshint && mocha --reporter spec",
+    "test": "npm run jshint && testee test/index.html --browsers firefox --reporter Spec",
     "postversion": "git push --tags && git push",
     "release:pre": "npm version prerelease && npm publish",
     "release:patch": "npm version patch && npm publish",
@@ -25,12 +25,19 @@
     "url": "https://github.com/bit-docs/bit-docs-html-toc/issues"
   },
   "homepage": "https://github.com/bit-docs/bit-docs-html-toc#readme",
-  "system": {},
+  "system": {
+    "npmAlgorithm": "flat"
+  },
   "dependencies": {
-    "can-control": "^3.0.0-pre.5",
-    "can-stache": "^3.0.0-pre.11"
+    "can-control": "^3.0.3",
+    "can-stache": "^3.0.7"
   },
   "devDependencies": {
-    "mocha": "^3.1.2"
+    "chai": "^3.5.0",
+    "jquery": "^3.1.1",
+    "jshint": "^2.9.4",
+    "steal": "^0.16.41",
+    "steal-mocha": "0.0.3",
+    "testee": "^0.3.0-pre.2"
   }
 }
