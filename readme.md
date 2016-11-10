@@ -1,8 +1,15 @@
 # bit-docs-html-toc
+[![npm version](https://badge.fury.io/js/bit-docs-html-toc.svg)](https://badge.fury.io/js/bit-docs-html-toc)
+[![Build Status](https://travis-ci.org/bit-docs/bit-docs-html-toc.svg?branch=master)](https://travis-ci.org/bit-docs/bit-docs-html-toc)
 
 A table of contents for use with [bit-docs-generate-html](https://github.com/bit-docs/bit-docs-generate-html).
 
-![toc](https://cloud.githubusercontent.com/assets/361671/18181878/6dd11318-705b-11e6-88e1-133c355742c9.gif)
+![screen shot 2016-11-10 at 10 16 55](https://cloud.githubusercontent.com/assets/724877/20181326/830b44a2-a73c-11e6-923c-5c880164383b.png)
+
+![screen shot 2016-11-10 at 10 15 51](https://cloud.githubusercontent.com/assets/724877/20181334/887fbbe8-a73c-11e6-929b-0ba411cdd63b.png)
+
+![screen shot 2016-11-09 at 17 02 17](https://cloud.githubusercontent.com/assets/724877/20152767/612903ae-a69e-11e6-9fe0-6d781567fd6f.png)
+
 
 ## Use
 
