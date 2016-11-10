@@ -1,4 +1,6 @@
 # bit-docs-html-toc
+[![npm version](https://badge.fury.io/js/bit-docs-html-toc.svg)](https://badge.fury.io/js/bit-docs-html-toc)
+[![Build Status](https://travis-ci.org/bit-docs/bit-docs-html-toc.svg?branch=master)](https://travis-ci.org/bit-docs/bit-docs-html-toc)
 
 A table of contents for use with [bit-docs-generate-html](https://github.com/bit-docs/bit-docs-generate-html).
 
