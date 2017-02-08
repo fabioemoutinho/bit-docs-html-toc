@@ -31,8 +31,20 @@ Where `$VERSION` is the latest version on npm.
 
 In your template add a class **on-this-page-container**:
 
-```js
+```html
 <div class="on-this-page-container"></div>
+```
+
+By default, all heading tags children of the first `article` tag on the page will 
+be collected to create the table of contents; if you want to use a different element
+just do:
+
+```html
+<div 
+  class="on-this-page-container"
+  data-heading-container-selector="#my-custom-selector"
+>
+</div>
 ```
 
 The table of contents will be injected into this element at run time.
