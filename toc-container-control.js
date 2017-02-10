@@ -20,7 +20,7 @@ module.exports =  Control.extend({
 		});
 	},
 
-	getDocObject() {
+	getDocObject: function() {
 		return window.docObject || {};
 	},
 
@@ -38,7 +38,7 @@ module.exports =  Control.extend({
 		return (typeof depth === "number" ? Math.min(depth, 6) : 1);
 	},
 
-	getHeadingsContainerSelector(el) {
+	getHeadingsContainerSelector: function(el) {
 		var selector = el.dataset.headingsContainerSelector;
 
 		return selector ? selector : "article";
