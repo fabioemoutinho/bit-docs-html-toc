@@ -48,3 +48,13 @@ just do:
 ```
 
 The table of contents will be injected into this element at run time.
+
+
+To control the number of child headers that will be included in the TOC, use the
+`@outline` tag like so:
+
+```
+@outline 2
+```
+
+This will include `<h2>` and `<h3>` elements, rather than the normal `<h2>` only.
