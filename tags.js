@@ -1,6 +1,6 @@
 /**
  * @parent bit-docs-html-toc/tags
- * @module {bit-docs/types/tag} bit-docs-html-toc/tags/outline @outline
+ * @module {bit-docs-process-tags/types/tag} bit-docs-html-toc/tags/outline @outline
  * 
  * @description Controls the outline behavior.
  * 
