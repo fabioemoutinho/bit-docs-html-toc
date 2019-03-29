@@ -1,9 +1,33 @@
-var stache = require("can-stache");
-var Control = require("can-control");
+var viewTarget = require("can-view-target");
 var makeTree = require("./make-tree");
+var assign = require("can-assign");
 
-var template = stache("{{#each nodes}}{{renderNode tagName .}}{{/each}}");
+// data { tagName: tagName, node: node }
+var renderNodeTarget = viewTarget([{
+	tag: "li",
+	children: [
+		{
+			tag: "a",
+			attrs: {
+				href: function(data){
+					return this.setAttribute("href","#"+data.node.id);
+				}
+			},
+			children: [function(data){ this.nodeValue = data.node.text; }]
+		},
+		function(data){
+			var container = document.createElement(data.tagName);
+			data.node.children.forEach(function(node){
+				container.appendChild(renderNodeTarget.hydrate({node: node, tagName: data.tagName}));
+			});
+			if(data.node.children.length) {
+				this.parentNode.replaceChild(container, this);
+			}
 
+		}
+	]
+}]);
+/*
 var renderNode = stache(
 	"<li>" +
 		"<a href='#{{node.id}}'>{{node.text}}</a>" +
@@ -16,34 +40,46 @@ var renderNode = stache(
 		"{{/if}}" +
 	"</li>"
 );
+*/
 
-stache.registerSimpleHelper("renderNode", function(tagName, node) {
+// data - { nodes: titles, tagName: this.tagName }
+var template = function(data){
+	var container = document.createDocumentFragment();
+	data.nodes.forEach(function(node){
+		container.appendChild(renderNodeTarget.hydrate({node: node, tagName: data.tagName}));
+	});
+	return container;
+};
+
+
+//var template = stache("{{#each nodes}}{{renderNode tagName .}}{{/each}}");
+/*stache.registerSimpleHelper("renderNode", function(tagName, node) {
 	return renderNode({ tagName: tagName, node: node });
-});
+});*/
 
-module.exports = Control.extend({
-	init: function(el, options) {
-		this.depth = options.depth;
-		this.tagName = options.tagName;
-		this.headingsContainerSelector = options.headingsContainerSelector;
+var TocControl = function(el, options){
+	this.depth = options.depth;
+	this.tagName = options.tagName;
+	this.headingsContainerSelector = options.headingsContainerSelector;
 
-		var titles = this.collectTitles();
+	var titles = this.collectTitles();
 
-		// If there are no titles, bail
-		if (!titles.length) {
-			el.parentNode.removeChild(el);
-			return;
-		} else {
-			el.parentNode.style.display = 'block';
-		}
+	// If there are no titles, bail
+	if (!titles.length) {
+		el.parentNode.removeChild(el);
+		return;
+	} else {
+		el.parentNode.style.display = 'block';
+	}
 
-		// Append our template
-		this.element.appendChild(template({
-			nodes: titles,
-			tagName: this.tagName
-		}));
-	},
+	// Append our template
+	el.appendChild(template({
+		nodes: titles,
+		tagName: this.tagName
+	}));
+};
 
+assign(TocControl.prototype, {
 	makeSelector: function(tagName) {
 		var container = this.headingsContainerSelector;
 		return container + " " + tagName;
@@ -68,4 +104,4 @@ module.exports = Control.extend({
 		return headings;
 	}
 });
-
+module.exports = TocControl;

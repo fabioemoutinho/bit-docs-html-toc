@@ -1,25 +1,25 @@
-var Control = require("can-control");
+var assign = require("can-assign");
 var TableOfContents = require("./toc-control");
 
-module.exports =  Control.extend({
-	init: function(el) {
-		el.style.display = "none";
+var TocControl = function(el){
+	el.style.display = "none";
 
-		var depth = this.getOutlineDepth();
-		var tagName = this.getOutlineTagName();
-		var selector = this.getHeadingsContainerSelector(el);
+	var depth = this.getOutlineDepth();
+	var tagName = this.getOutlineTagName();
+	var selector = this.getHeadingsContainerSelector(el);
 
-		var toc = document.createElement(tagName);
-		toc.className = "on-this-page";
-		el.appendChild(toc);
+	var toc = document.createElement(tagName);
+	toc.className = "on-this-page";
+	el.appendChild(toc);
 
-		new TableOfContents(toc, {
-			depth: depth,
-			tagName: tagName,
-			headingsContainerSelector: selector
-		});
-	},
+	new TableOfContents(toc, {
+		depth: depth,
+		tagName: tagName,
+		headingsContainerSelector: selector
+	});
+};
 
+assign(TocControl.prototype, {
 	getDocObject: function() {
 		return window.docObject || {};
 	},
@@ -44,3 +44,6 @@ module.exports =  Control.extend({
 		return selector ? selector : "article";
 	}
 });
+
+
+module.exports =  TocControl;
