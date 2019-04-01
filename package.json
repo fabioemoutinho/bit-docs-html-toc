@@ -27,6 +27,9 @@
   "homepage": "https://github.com/bit-docs/bit-docs-html-toc#readme",
   "dependencies": {
     "can-assign": "^1.3.1",
+    "can-define-lazy-value": "^1.1.0",
+    "can-dom-mutate": "^1.3.6",
+    "can-string": "^1.0.0",
     "can-view-target": "^4.1.2"
   },
   "devDependencies": {

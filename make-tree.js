@@ -63,7 +63,8 @@ function makeTreeData(elements) {
 
 	return map.call(elements, function(element) {
 		var text = element.textContent;
-		var id = makeHeadingId(text);
+		var id = element.id || makeHeadingId(text);
+		element.id = id;
 		var level = getElementLevel(element);
 
 		// generate unique id for elements with same text
