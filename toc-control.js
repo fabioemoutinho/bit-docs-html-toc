@@ -152,7 +152,7 @@ var prototype = {
 				header: header,
 				rect: header.getBoundingClientRect(),
 				button: buttons[i]
-			}
+			};
 		});
 		// this simulates a header at the end of the page
 		positions.push({
@@ -187,7 +187,7 @@ var prototype = {
 			else if( nextDistance >= (articleRect.height / 2) && curDistance < (articleRect.height / 2) ) {
 				position.button.classList.add("active");
 			}
-		})
+		});
 	},
 	disconnectedCallback: function(){
 		this.teardowns.forEach(function(teardown){
@@ -209,7 +209,7 @@ lazy(prototype,"titleTree", function(){
 	return makeTree(this.titles);
 });
 lazy(prototype,"buttons", function(){
-	return this.querySelectorAll("li")
+	return this.querySelectorAll("li");
 });
 
 

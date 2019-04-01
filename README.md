@@ -29,32 +29,64 @@ To use, add bit-docs-html-toc to your bit-docs dependencies in package.json:
 
 Where `$VERSION` is the latest version on npm.
 
-In your template add a class **on-this-page-container**:
+In your template add a `<bit-toc>` element:
 
 ```html
-<div class="on-this-page-container"></div>
+<bit-toc></bit-toc>
 ```
 
-By default, all heading tags children of the first `article` tag on the page will 
+## Attributes
+
+`<bit-toc>` supports the following attributes:
+
+### heading-container-selector
+
+By default, all heading tags children of the first `article` tag on the page will
 be collected to create the table of contents; if you want to use a different element
 just do:
 
 ```html
-<div 
-  class="on-this-page-container"
-  data-heading-container-selector="#my-custom-selector"
+<bit-toc
+  heading-container-selector="#my-custom-selector"
 >
-</div>
+</bit-toc>
 ```
 
 The table of contents will be injected into this element at run time.
 
+### depth
 
-To control the number of child headers that will be included in the TOC, use the
+By default, only `h2` elements are collected. You
+can change to include `<h3>` elements by setting depth like:
+
+```html
+<bit-toc depth="2"></bit-toc>
+```
+
+Alternatively, the number of child headers that will be included in the TOC, use the
 `@outline` tag like so:
 
 ```
 @outline 2
 ```
 
-This will include `<h2>` and `<h3>` elements, rather than the normal `<h2>` only.
+### child-tag
+
+If you want `<li>`'s to be within an `<ol>` instead of a `<ul>`, this
+can be configured like:
+
+```html
+<bit-toc child-tag="ol"></bit-toc>
+```
+
+## Methods
+
+Call `.highlight()` to force an update of the `active` or `completed`
+class names on the `<li>` elements:
+
+```js
+document.querySelector("bit-toc").highlight()
+```
+
+This happens automatically when the `heading-container-selector`
+element is scrolled.
