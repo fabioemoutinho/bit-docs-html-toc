@@ -16,4 +16,4 @@
  *
  * @body
  */
-require("./toc");
+require("./toc-control");
