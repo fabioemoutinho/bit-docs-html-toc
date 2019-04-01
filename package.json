@@ -1,6 +1,6 @@
 {
   "name": "bit-docs-html-toc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "table of contents bit-docs plugin",
   "main": "toc.js",
   "scripts": {
