@@ -78,8 +78,6 @@ var prototype = {
 		if (!titles.length) {
 			this.parentNode.removeChild(this);
 			return;
-		} else {
-			this.parentNode.style.display = 'block';
 		}
 
 		// Append our template
@@ -112,6 +110,16 @@ var prototype = {
 			return (typeof depth === "number" ? Math.min(depth, 6) : 1);
 		}
 	},
+	get outlineScrollElement(){
+		if(this.scrollSelector === "true" || this.scrollSelector === "") {
+			return this;
+		} else if(this.scrollSelector) {
+			return document.querySelector(this.scroll);
+		}
+		else {
+			return;
+		}
+	},
 	get containerSelector(){
 		return this.headingsContainerSelector || "article";
 	},
@@ -131,7 +139,7 @@ var prototype = {
 	setupHighlighting: function(){
 		this.article = document.querySelector(this.containerSelector);
 		if(this.article) {
-			var highlight =  debounce(this.highlight.bind(this),50);
+			var highlight =  debounce(this.highlight.bind(this),1);
 			this.article.addEventListener("scroll",highlight);
 			this.teardowns.push(function(){
 				this.article.removeEventListener("scroll", highlight);
@@ -188,6 +196,13 @@ var prototype = {
 				position.button.classList.add("active");
 			}
 		});
+		var elementToScroll = this.outlineScrollElement;
+
+		if(elementToScroll) {
+			// find out where the midpoint is
+			var distance = (this.article.scrollTop + this.article.offsetHeight / 2) / this.article.scrollHeight;
+			elementToScroll.scrollTop = (elementToScroll.scrollHeight * distance) - (elementToScroll.offsetHeight / 2);
+		}
 	},
 	disconnectedCallback: function(){
 		this.teardowns.forEach(function(teardown){

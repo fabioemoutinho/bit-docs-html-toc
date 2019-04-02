@@ -79,6 +79,20 @@ can be configured like:
 <bit-toc child-tag="ol"></bit-toc>
 ```
 
+### scroll-selector
+
+If present, will scroll the `<bit-toc>` element with the `heading-container-selector`:
+
+```html
+<bit-toc scroll-selector></bit-toc>
+```
+
+`scroll-selector` can also be set to some other element to scroll:
+
+```html
+<bit-toc scroll-selector="#some-parent"></bit-toc>
+```
+
 ## Methods
 
 Call `.highlight()` to force an update of the `active` or `completed`

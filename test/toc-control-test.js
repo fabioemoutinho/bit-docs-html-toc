@@ -18,7 +18,6 @@ describe("TableOfContents", function() {
 
 	afterEach(function() {
 		$testArea.empty();
-
 	});
 
 	it("makes a flat list from headings", function() {
@@ -152,4 +151,69 @@ describe("TableOfContents", function() {
 			}, "initialized correctly");
 
 	});
+
+	it("can scroll the container", function(){
+		var headings = [
+			"<h2>Bower</h2>",
+			"<p>Install</p>",
+			"<h2>NPM</h2>",
+			"<p>Install</p>",
+			"<h2>Configure</h2>",
+			"<p>xyz</p>",
+			"<h2>Writing Modules</h2>",
+			"<p>writing modules</p>",
+			"<h2>Extra</h2>",
+			"<p>final</p>"
+		];
+
+		$testArea.html("<article id='article'>"+headings.join("")+"</article>"+
+			"<bit-toc headings-container-selector='#article' scroll-selector></bit-toc>");
+
+			$("article").css({
+				position: "fixed",
+				top: 0,
+				height: 200,
+				left: 200,
+				width: 600,
+				backgroundColor: "gray",
+				overflowY: "auto"
+			});
+
+			$("article p").css({
+				height: "500px",
+				border: "solid 1px red"
+			});
+
+			$("bit-toc").css({
+				display: "block",
+				height: "50px",
+				overflow: "auto"
+			})[0].highlight();
+
+			function getCompletedAndActive(){
+				var result = {completed: [], active: []}
+				$("bit-toc li").each(function(i, node){
+					if(node.classList.contains("completed")) {
+						result.completed.push(node.textContent)
+					}
+					if(node.classList.contains("active")) {
+						result.active.push(node.textContent)
+					}
+				});
+				return result;
+			}
+
+			assert.deepEqual(getCompletedAndActive(), {
+				active: ["Bower"],
+				completed: []
+			}, "initialized correctly");
+
+			$("#article").scrollTop(1200);
+			$("bit-toc")[0].highlight(); // so we don't have to wait for the throttling
+
+
+			assert.ok( $("bit-toc")[0].scrollTop > 0, "scrollTop has moved");
+
+	});
+
 });
