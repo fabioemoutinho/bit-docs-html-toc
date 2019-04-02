@@ -114,7 +114,7 @@ var prototype = {
 		if(this.scrollSelector === "true" || this.scrollSelector === "") {
 			return this;
 		} else if(this.scrollSelector) {
-			return document.querySelector(this.scroll);
+			return document.querySelector(this.scrollSelector);
 		}
 		else {
 			return;
