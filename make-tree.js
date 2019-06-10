@@ -60,7 +60,13 @@ function makeHeadingId(text) {
 function makeTreeData(elements) {
 	var ids = {};
 	var map = [].map;
-
+	elements = elements.filter(function(element) {
+		// for testing
+		if (element.attributes) {
+			return !element.attributes['data-skip'];
+		}
+		return true;
+	});
 	return map.call(elements, function(element) {
 		var text = element.textContent;
 		var id = element.id || makeHeadingId(text);
