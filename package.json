@@ -38,6 +38,6 @@
     "jshint": "^2.9.4",
     "steal": "^0.16.41",
     "steal-mocha": "0.0.3",
-    "testee": "^0.3.0-pre.2"
+    "testee": "^0.9.1"
   }
 }
