@@ -56,4 +56,16 @@ describe("makeTree", function() {
 			{ id: "writing-modules", level: 2, text: "Writing Modules", children: [] }
 		]);
 	});
+
+	it("allows ignoring elements with data-skip attribute", function() {
+		var elements = [
+			{ tagName: "h2", textContent: "new MyType", attributes: {} },
+			{ tagName: "h3", textContent: "Parameters", attributes: { 'data-skip': {} } },
+			{ tagName: "h2", textContent: "Configure", attributes: {} }
+		];
+		assert.deepEqual(makeTree(elements), [
+			{id: "new-mytype", level: 2, text: "new MyType", children: []},
+			{ id: "configure", level: 2, text: "Configure", children: [] }
+		]);
+	});
 });
