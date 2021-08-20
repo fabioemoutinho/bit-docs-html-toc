@@ -92,15 +92,3 @@ If present, will scroll the `<bit-toc>` element with the `heading-container-sele
 ```html
 <bit-toc scroll-selector="#some-parent"></bit-toc>
 ```
-
-## Methods
-
-Call `.highlight()` to force an update of the `active` or `completed`
-class names on the `<li>` elements:
-
-```js
-document.querySelector("bit-toc").highlight()
-```
-
-This happens automatically when the `heading-container-selector`
-element is scrolled.

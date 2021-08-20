@@ -16,4 +16,4 @@
  *
  * @body
  */
-require("./toc-control");
+require("./prev-next-control");
