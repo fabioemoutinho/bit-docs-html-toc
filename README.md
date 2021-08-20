@@ -90,5 +90,5 @@ If present, will scroll the `<bit-toc>` element with the `heading-container-sele
 `scroll-selector` can also be set to some other element to scroll:
 
 ```html
-<bit-toc scroll-selector="#some-parent"></bit-toc>
+<bit-prev-next target-selector="#some-parent"></bit-toc>
 ```
