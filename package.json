@@ -25,14 +25,12 @@
     "url": "https://github.com/bit-docs/bit-docs-html-prev-next/issues"
   },
   "homepage": "https://github.com/bit-docs/bit-docs-html-prev-next#readme",
-  "dependencies": {
-    "can-string": "^1.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
     "jquery": "^3.1.1",
     "jshint": "^2.9.4",
-    "steal": "^0.16.41",
+    "steal": "^0.16.45",
     "steal-mocha": "0.0.3",
     "testee": "^0.9.1"
   }

@@ -1,19 +1,65 @@
-/**
- * @parent bit-docs-html-toc/static
- * @module {function} bit-docs-html-toc/toc.js
- *
- * Main front end JavaScript file for static portion of this plugin.
- *
- * @signature `TOCContainer(el)`
- *
- * Hydrates the container element with class `on-this-page-container` with the
- * headers from the page.
- *
- * If `DEPTH` was specified to the [bit-docs-html-toc/tags/outline] tag, then
- * only headers less than and including that depth will be hydrated.
- *
- * @param {HTMLElement} el The HTML element to hydrate.
- *
- * @body
- */
-require("./prev-next-control");
+class BitPrevNext extends HTMLElement {
+	connectedCallback() {
+		this.setPreviousNext();
+
+		if (this.hasPrevious()) {
+			this.appendChild(this.getAnchorElement(this.previous, true));
+		}
+		if (this.hasNext()) {
+			this.appendChild(this.getAnchorElement(this.next));
+		}
+	}
+
+	hasNext() {
+		return !(this.next.element == null);
+	}
+
+	hasPrevious() {
+		return !(this.previous.element == null);
+	}
+
+	get listSelector() {
+		return this.getAttribute('list-selector');
+	}
+
+	setPreviousNext() {
+		const list = document.querySelectorAll(this.listSelector)[0];
+    const currentElement = this.getCurrentElement(list);
+		const previousElement = currentElement ? currentElement.parentElement.previousElementSibling : null;
+		const nextElement = currentElement ? currentElement.parentElement.nextElementSibling : null;
+
+		const previousNext = function(element) {
+			if (element) {
+				return {
+					element: element,
+					title: element.firstElementChild.innerText,
+					href: element.firstElementChild.href,
+				};
+			}
+			return {};
+		};
+
+		this.previous = previousNext(previousElement);
+		this.next = previousNext(nextElement);
+	}
+
+  getCurrentElement(list) {
+    return Array.from(
+      list.querySelectorAll('a')
+    ).find(
+      (val) => val.href.split('#')[0].split('?')[0] === location.href.split('#')[0].split('?')[0]
+    );
+  }
+
+	getAnchorElement(previousNextObj, isPrevious) {
+		const anchor = document.createElement('a');
+		anchor.setAttribute('href', previousNextObj.href);
+		anchor.innerText = `${isPrevious ? 'Previous' : 'Next'} Lesson: ${previousNextObj.title}`;
+		anchor.title = previousNextObj.title;
+		return anchor;
+	}
+}
+
+BitPrevNext = customElements.define('bit-prev-next', BitPrevNext);
+
+module.exports = BitPrevNext;
