@@ -1,5 +1,3 @@
-var tags = require("./tags");
-
 /**
  * @parent plugins
  * @module {function} bit-docs-html-prev-next

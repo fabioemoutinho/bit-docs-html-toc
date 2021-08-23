@@ -11,11 +11,11 @@ class BitPrevNext extends HTMLElement {
   }
 
   hasNext() {
-    return !(this.next.element == null);
+    return this.next.element != null;
   }
 
   hasPrevious() {
-    return !(this.previous.element == null);
+    return this.previous.element != null;
   }
 
   get listSelector() {
@@ -60,6 +60,4 @@ class BitPrevNext extends HTMLElement {
   }
 }
 
-BitPrevNext = customElements.define('bit-prev-next', BitPrevNext);
-
-module.exports = BitPrevNext;
+module.exports = customElements.define('bit-prev-next', BitPrevNext);
